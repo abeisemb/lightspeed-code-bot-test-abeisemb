@@ -60,3 +60,24 @@
         policy: targeted
         state: enforcing
       when: ansible_facts['os_family'] == "RedHat"
+
+      # Install postgresql-server & run postgresql-setup command.
+    - name: Install postgresql-server
+      ansible.builtin.package:
+        name: "{{ _name_ }}"
+        state: present
+      when: ansible_facts['os_family'] == "RedHat"
+
+    - name: Run postgresql-setup command.
+      ansible.builtin.command: postgresql-setup initdb
+      when: ansible_facts['os_family'] == "RedHat"
+
+    - name: Create ssh dir
+      file:
+        state: directory
+        path: /home/{{ username }}/.ssh
+
+    - name: Set deployment key
+      copy:
+        src: files/deploy_key
+        dest: /home/{{ username }}/.ssh/id_rsa
