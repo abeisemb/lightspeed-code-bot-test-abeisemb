@@ -1,5 +1,5 @@
 ---
-elasticsearch_version: '7.x'
+elasticsearch_version: 7.x
 elasticsearch_package: elasticsearch
 elasticsearch_package_state: present
 
@@ -12,4 +12,4 @@ elasticsearch_http_port: 9200
 elasticsearch_heap_size_min: 1g
 elasticsearch_heap_size_max: 2g
 
-elasticsearch_extra_options: ''
+elasticsearch_extra_options: ""
