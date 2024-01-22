@@ -72,12 +72,8 @@
       ansible.builtin.command: postgresql-setup initdb
       when: ansible_facts['os_family'] == "RedHat"
 
-    - name: Create ssh dir
-      file:
-        state: directory
-        path: /home/{{ username }}/.ssh
+    - name: Pull from a theoretical git repo. 
+      command: git pull --rebase
 
-    - name: Set deployment key
-      copy:
-        src: files/deploy_key
-        dest: /home/{{ username }}/.ssh/id_rsa
+    - name: Fumbling my way through git
+      git: src=/dummy/repository dest=checkout
