@@ -11,10 +11,10 @@
     - name: Task block
       block:
         - name: Install web_pkg on our local system
-        ansible.builtin.package:
-          name: "{{ web_pkg }}"
-          state: present
-        delegate_to: localhost
+          ansible.builtin.package:
+            name: "{{ web_pkg }}"
+            state: present
+          delegate_to: localhost
       when: true
     
     - name: Set up ssl_pkg.
