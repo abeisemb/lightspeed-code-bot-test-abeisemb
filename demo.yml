@@ -1,5 +1,5 @@
 ---
-- name: Demo Lightspeed extension
+- name: Demo Lightspeed extension 
   hosts: localhost
   vars:
     firewall_pkg: firewalld
@@ -8,11 +8,15 @@
     secret_src: /home/abeisemb/Pictures/thinking.png
     secret_dest: /home/abeisemb/Pictures/thonking.png
   tasks:    
-    - name: Install web_pkg on our local system
-      ansible.builtin.package:
-        name: "{{ web_pkg }}"
-        state: present
-      delegate_to: localhost
+    - name: Task block
+      block:
+        - name: Install web_pkg on our local system
+        ansible.builtin.package:
+          name: "{{ web_pkg }}"
+          state: present
+        delegate_to: localhost
+      when: true
+    
     - name: Set up ssl_pkg.
       ansible.builtin.set_fact:
         ssl_cmd: sudo -u apache apache2ctl configtest
@@ -70,10 +74,10 @@
 
     - name: Run postgresql-setup command.
       ansible.builtin.command: postgresql-setup initdb
-      when: ansible_facts['os_family'] == "RedHat"
+      ignore_errors: true
 
     - name: Pull from a theoretical git repo. 
-      command: git pull --rebase
+      git: 
+        repo: "https://github.com/abeisemb/lightspeed-code-bot-test-abeisemb"
+        version: HEAD
 
-    - name: Fumbling my way through git
-      git: src=/dummy/repository dest=checkout
