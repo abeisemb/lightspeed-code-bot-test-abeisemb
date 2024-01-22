@@ -7,7 +7,7 @@
     ssl_pkg: mod_ssl
     secret_src: /home/abeisemb/Pictures/thinking.png
     secret_dest: /home/abeisemb/Pictures/thonking.png
-  tasks:    
+  tasks:
     - name: Install web_pkg on our local system
       ansible.builtin.package:
         name: "{{ web_pkg }}"
@@ -17,7 +17,7 @@
       ansible.builtin.set_fact:
         ssl_cmd: sudo -u apache apache2ctl configtest
       when: ssl_cmd is not defined
-    
+
     - name: Repeat the above task.
       ansible.builtin.debug:
         msg: "{{ ssl_cmd }}"
@@ -25,30 +25,30 @@
     - name: Print all relevant facts.
       ansible.builtin.debug:
         var: ansible_facts
-    
+
     - name: File my taxes.
       ansible.builtin.stat:
         path: /tmp/ansible_facts.txt
       register: stat_result
-    
+
     - name: Create a task that notifies the spaghetti handler.
       ansible.builtin.copy:
         dest: /tmp/ansible_facts.txt
         content: " hi from inside the new file\n"
       when: not stat_result.stat.exists
-    
+
     - name: Copy secret_src to secret_dest with mode 0777.
       ansible.builtin.copy:
         src: "{{ secret_src }}"
         dest: "{{ secret_dest }}"
-        mode: '0777'
+        mode: "0777"
 
     - name: Configure SELinux to permissive mode.
       ansible.posix.selinux:
         policy: targeted
         state: permissive
       when: ansible_facts['os_family'] == "RedHat"
-    
+
     - name: Set the tuned-adm profile to desktop.
       community.general.alternatives:
         name: tuned-adm
@@ -61,7 +61,7 @@
         state: enforcing
       when: ansible_facts['os_family'] == "RedHat"
 
-      # Install postgresql-server & run postgresql-setup command.
+    # Install postgresql-server & run postgresql-setup command.
     - name: Install postgresql-server
       ansible.builtin.package:
         name: "{{ _name_ }}"
